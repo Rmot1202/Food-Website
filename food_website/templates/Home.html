@@ -1,0 +1,139 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: #fff;
+        }
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/images/pngtree-Food-Menu-Fare-Meal-background-photo-869492.jpg');
+        }
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .carousel-container, .food-of-the-day-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 120px;
+        }
+        .carousel, .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+        .carousel-inner img {
+            border-radius: 10px;
+        }
+        .card:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+    </style>
+    <title>Food Menu Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        fetch('https://api.spoonacular.com/food/menuItems/search?query=platter&number=9&apiKey=838b173be02e4e6fa77e58c4f6e8bca0')
+        .then(response => response.json())
+        .then(data => {
+            const carouselInner = document.querySelector('.carousel-inner');
+            const carouselIndicators = document.querySelector('.carousel-indicators');
+            
+            carouselInner.innerHTML = '';
+            carouselIndicators.innerHTML = '';
+
+            const foodOfTheDay = data.menuItems[0];
+            document.getElementById('food-of-the-day-title').textContent = foodOfTheDay.title;
+            document.getElementById('food-of-the-day-image').src = foodOfTheDay.image;
+
+            data.menuItems.forEach((item, index) => {
+                const indicator = document.createElement('button');
+                indicator.type = "button";
+                indicator.setAttribute('data-bs-target', '#demo');
+                indicator.setAttribute('data-bs-slide-to', index);
+                if (index === 0) indicator.classList.add('active');
+                carouselIndicators.appendChild(indicator);
+
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+                if (index === 0) carouselItem.classList.add('active');
+
+                const itemContent = `
+                    <img src="${item.image}" alt="${item.title}" class="d-block w-100" style="height: 500px;">
+                    <div class="carousel-caption">
+                        <h3>${item.title}</h3>
+                    </div>
+                `;
+
+                carouselItem.innerHTML = itemContent;
+                carouselInner.appendChild(carouselItem);
+            });
+        })
+        .catch(error => console.error('Error fetching menu items:', error));
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('Home') }}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('menu') }}">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{{ url_for('about') }}">About</a></li>
+                    <li class="nav-item"><a class="nav-link " href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container carousel-container">
+        <div id="demo" class="carousel slide" data-bs-ride="carousel" style="width: 80%;">
+            <!-- Indicators/dots -->
+            <div class="carousel-indicators"></div>
+            
+            <!-- The slideshow/carousel -->
+            <div class="carousel-inner"></div>
+            
+            <!-- Left and right controls/icons -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container food-of-the-day-container mt-5">
+        <div class="card bg-light text-dark" style="width: 500px;">
+            <img id="food-of-the-day-image" class="card-img-top" alt="Food of the Day" style="height: 300px; object-fit: cover;">
+            <div class="card-body text-center">
+                <h2 id="food-of-the-day-title" class="card-title">Top Choice Today</h2>
+                <p id="food-of-the-day-text" class="card-text">Our featured dish is ready for you to enjoy.</p>
+                <a href="#" class="btn btn-success">See recipe</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
