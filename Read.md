@@ -1,80 +1,100 @@
-# Food Menu Website
 
-A responsive food menu website created with Bootstrap and JavaScript, featuring a dynamic menu and "Food of the Day" section powered by the Spoonacular API. This project showcases various dishes with their recipes, allows users to contact the restaurant, and provides information about the business.
+# Food Menu Website 
+
+This is a Flask-based web application that features a responsive food menu, dynamic content fetched from the **Spoonacular API**, and an integrated chatbot powered by **OpenAI's GPT-3.5-turbo**. The chatbot enhances user interaction by providing automated responses for inquiries.
 
 ## Features
 
-- **Home Page**: 
-  - Displays a carousel of featured dishes with images and descriptions, dynamically fetched from the Spoonacular API.
-  - Contains a "Food of the Day" section showcasing a popular dish, updated daily from the API.
+### Web Pages
+- **Home Page**: Displays a carousel with featured dishes and a "Food of the Day" section.
+- **Menu Page**: Shows a grid of dishes fetched from the Spoonacular API, including images and a "See Recipe" button.
+- **About Page**: Provides the business history, mission statement, and team introductions with an inspirational quote.
+- **Contact Page**: Features a contact form for inquiries and a star rating system for feedback.
 
-- **Menu Page**:
-  - Lists several dishes with images, descriptions, and links to view detailed recipes.
-  - Includes a "Load More" button to dynamically display more dishes.
-
-- **About Page**:
-  - Provides a brief history, mission statement, and a "Meet the Staff" section.
-  - Features a quote from Paul Prudhomme.
-
-- **Contact Page**:
-  - A form that allows users to submit their email, name, phone number, and a description for questions or feedback.
-  - Includes a rating system where users can rate their experience.
-
-## Pages
-
-1. **Home**: Introduction with a featured dish carousel and "Food of the Day" section.
-2. **Menu**: List of all available recipes, loaded dynamically from the Spoonacular API.
-3. **About**: Business history, mission, and team introduction.
-4. **Contact**: Contact form and user rating system.
+### Chatbot Integration
+- A chatbot interface allows users to interact and receive responses for questions and guidance.
+- The `/chat` route handles chat requests using OpenAI's API and responds dynamically.
 
 ## Technologies Used
-
-- **HTML5**
-- **CSS3**
-- **Bootstrap 5.3.2** (for responsiveness and UI components)
-- **JavaScript** (for interactivity)
-- **Spoonacular API** (for fetching dish data dynamically)
+- **Python**: The main programming language.
+- **Flask**: The web framework used for serving HTML templates and handling API requests.
+- **HTML5/CSS3/JavaScript**: For the frontend structure, styling, and interactivity.
+- **Bootstrap 5.3.2**: Ensures responsive design and UI components.
+- **OpenAI GPT-3.5-turbo**: Powers the chatbot for generating intelligent responses.
+- **Spoonacular API**: Supplies dynamic data for the food menu.
+- **dotenv** (optional): For managing environment variables securely.
 
 ## Getting Started
 
-1. Clone the repository:
+### Prerequisites
+- **Python 3.7+**
+- **Flask**: Install via `pip install flask`.
+- **OpenAI API Key**: Ensure you have an OpenAI API key set up in your environment.
 
-    ```bash
-    git clone https://github.com/your-username/food-menu-website.git
-    ```
+### Installation
 
-2. Navigate to the project folder:
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/food-menu-website.git
+   cd food-menu-website
+   ```
 
-    ```bash
-    cd food-menu-website
-    ```
+2. **Set up a virtual environment (optional but recommended)**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use venv\Scripts\activate
+   ```
 
-3. Open the `Home.html` file in your browser to view the website. Make sure to replace the API key in the JavaScript file with your own Spoonacular API key.
+3. **Install required packages**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-## Project Structure
+4. **Set your OpenAI API key**:
+   Create a `.env` file in the project root with the following line:
+   ```bash
+   OPENAI_API_KEY=your-actual-api-key
+   ```
 
+5. **Run the Flask app**:
+   ```bash
+   python chat.py
+   ```
+
+6. **Access the website**:
+   Open your web browser and go to `http://127.0.0.1:5000`.
+
+### Project Structure
 ```
-├── Home.html
-├── about.html
-├── contact.html
-├── menu.html
-├── assets
-│   ├── images
-│   └── css
+├── template
+│   ├── Home.html
+│   ├── about.html
+│   ├── contact.html
+│   ├── menu.html
+├── chat.py
+├── requirements.txt
 └── README.md
 ```
 
+### Environment Variables
+Ensure your environment includes:
+- **OPENAI_API_KEY**: Your OpenAI API key.
+
+### Security Note
+**Do not** hardcode sensitive information like API keys. Use environment variables or a `.env` file managed by `python-dotenv`.
+
 ## How to Use
 
-- **Home Page**: Explore the carousel of featured dishes and click "See Recipe" to view detailed recipes. The "Food of the Day" section shows a new popular dish daily.
-- **Menu Page**: Scroll through the available dishes and view recipes. Use the "Load More" button to dynamically load more content.
-- **About Page**: Learn about the business history, mission, and staff.
-- **Contact Page**: Submit inquiries or feedback using the form and rate your experience using the star system.
+### Chatbot
+- Navigate to the **Contact Page**.
+- Interact with the chatbot interface by typing in your message.
+- The chatbot will respond or display a modal prompt for further assistance.
+
+### Contact Form
+- Use the form on the **Contact Page** to submit inquiries and rate your experience.
 
 ## Future Enhancements
+- Add user authentication and session management.
+- Store user ratings and contact form submissions in a database.
+- Implement more advanced chatbot features like multi-turn dialogue memory.
 
-- Expand the recipe categories and add filters.
-- Implement a back-end system for handling form submissions and storing ratings.
-- Add infinite scrolling for the "Menu" page, automatically loading more dishes as the user scrolls down.
-
-#
